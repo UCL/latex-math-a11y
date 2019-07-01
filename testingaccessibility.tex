@@ -1,0 +1,310 @@
+\documentclass[]{article}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{pdfcomment}
+\usepackage{hyperref}
+
+  \title{Creating Accessible Documents with LaTeX}
+  \author{Jim Tyson}
+  \date{19 June 2019}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{to-non-users}{%
+\section{\texorpdfstring{To non
+\LaTeX~users}{To non ~users}}\label{to-non-users}}
+
+This document is intended for readers who \emph{already} use \LaTeX. A
+number of very good guides already exist for learning \LaTeX.
+
+\hypertarget{introduction-what-is-and-isnt-accessible}{%
+\section{Introduction: what is and isn't
+accessible}\label{introduction-what-is-and-isnt-accessible}}
+
+What makes a document accessible is not a matter of what software
+technology is used to produce it. An accessible document however
+produced should meet the following standards set out in
+\href{https://www.ucl.ac.uk/isd/services/websites-apps/creating-accessible-content/accessibility-fundamentals}{UCL's
+basic guidance on accessibility pages}.
+
+The basics as set out there cover
+
+\begin{itemize}
+\tightlist
+\item
+  structure;
+\item
+  formatting;
+\item
+  links;
+\item
+  labelling images;
+\item
+  use of colour;
+\item
+  content;%
+\item
+  transcipts and captions.
+\end{itemize}
+
+Issues regarding video material (\textbf{transcripts and captions}) are
+not of particular relevance to \LaTeX~ users but I will address the
+other matters below.
+
+\hypertarget{guidance-for-latex-users}{%
+\section{Guidance for LaTeX users}\label{guidance-for-latex-users}}
+
+For screenreader users, the least good solution is to provide the source
+\LaTeX~ file. This is not generally acceptable. The burden of
+understanding content from the raw \LaTeX~ is unacceptably high.
+
+Instead, the source should be prepared in such a way as to produce a
+document that is acceptably read by a screen reader. In some respects
+the ideal would be a tagged PDF - since PDF is the usual output
+generated in educaitonal contexts. However, there is currently (to my
+knowledge) no way to generate a fully tagged PDF document that includes
+readable mathematics from \LaTeX~ source. The most accessible format
+that can be readily generated from the \LaTeX~ source is HTML.  To create this HTML, 
+writers can use the utility \textbf{pandoc} (``Pandoc - About
+Pandoc'' n.d.) which ensures that the mathematical content is
+transformed to MathML to be read by screen reader software. Currently, I
+have not been able to preserve the table of contents in converting to
+HTML.
+
+Mathematics is stypeset in the usual way. For example:
+
+\[\frac{\sum{(x-\bar{x})^2}}{N}\]
+
+I will describe using \textbf{pandoc} later in this document after I
+have outlined steps to be taken in preparing the \LaTeX~ source.
+
+\hypertarget{structure}{%
+\subsection{Structure}\label{structure}}
+
+Most LaTeX writers will use the \textbf{\textbackslash{}section\{\}}
+family of commands to create a structured document. These heading styles
+will be understood when a PDF is rendered and will create a navigable
+document for a screen reader user. It is also recommended that a table
+of contents is included to increase accessibility.
+
+\hypertarget{formatting}{%
+\subsection{Formatting}\label{formatting}}
+
+\hypertarget{fonts-and-typefaces}{%
+\subsubsection{Fonts and typefaces}\label{fonts-and-typefaces}}
+
+Where possible, change the font family for the document with the
+following command in the preamble:
+
+\begin{verbatim}
+  \renewcommand{\familydefault}{\sfdefault}
+\end{verbatim}
+
+This will set a sans serif \textbf{Computer Modern} as the default for
+the document. Use \texttt{\textbackslash{}textbf\{\}} for emphasis
+rather than \texttt{\textbackslash{}emph\{\}} which produces italic text
+by default. If you are confident, you may consider redefining
+\texttt{\textbackslash{}emph\{\}} to produce \textbf{bold text}. This is
+not difficult but to preserve the toggling behaviour of
+\texttt{\textbackslash{}emph\{\}} requires some LaTeX know how. The code
+below will do it:
+
+\begin{verbatim}
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+\end{verbatim}
+
+(\emph{Formatting - What Is the Canonical Way to Redefine the
+\textbackslash{}Textbackslashemph Command} n.d.)
+
+\hypertarget{links}{%
+\subsubsection{Links}\label{links}}
+
+\hypertarget{hyperlinks-to-web-pages}{%
+\paragraph{Hyperlinks to web pages}\label{hyperlinks-to-web-pages}}
+
+Use the command \texttt{\textbackslash{}href\{url\}\{linktext\}} rather
+than use bare urls for inserting hyperlinks. So
+
+\begin{verbatim}
+\href{http://www.ucl.ac.uk/isd}{ISD home page.}
+\end{verbatim}
+
+Which produces \href{http://www.ucl.ac.uk/isd}{ISD home page.}
+
+\hypertarget{internal-links-and-cross-references}{%
+\paragraph{Internal links and cross
+references}\label{internal-links-and-cross-references}}
+
+It will be additionally helpful to make all \textbf{cross references} in
+your document into internal hyperlinks. You can do this simply by import
+the package \textbf{hyperref} in the pre-amble of your document with the
+\texttt{\textbackslash{}usepackage} command. Usually, \textbf{hyperref}
+must be the \textbf{last} package imported. The \textbf{table of
+contents}, \textbf{cross references} to graphics and tables, and
+citations, will all become document internal links. You can control the
+colours used for links as follows:
+
+\begin{verbatim}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+\end{verbatim}
+
+You can use the general \LaTeX~ \texttt{\textbackslash{}tableofcontents}
+command to generate a table of contents which will now be clickable and
+will be usable for navigation by screen reader users.
+
+\hypertarget{labelling-images-alt-text}{%
+\subsection{Labelling images (Alt
+text)}\label{labelling-images-alt-text}}
+
+If all images (and tables, and graphs and charts) have captions, a
+document created from your \LaTeX~ document will be reasonably
+accessible. You might consider the placing of your captions: would it be
+better for the caption to \textbf{precede} the graphical element rather
+than follow it?
+
+To create something more like true \textbf{alt-text}, you can use the
+package \textbf{pdfcomment}. With this package you can create a tooltip
+for an element as follows:
+
+\begin{verbatim}
+\pdftooltip{\includegraphics{img.png}}{This is the ALT text}
+\end{verbatim}
+
+Here is an example:
+
+\pdftooltip{\includegraphics{chick.jpg}}{This is a chick.}
+
+Note that you cannot use this method with the \textbf{figure} environment, and so
+images cannot have both a \emph{pdftooltip} and a \emph{caption}.
+
+This works reliably with Adobe Reader, but some pdf readers may produce
+a less good result.  You cannot use this method when producing HTML with \emph{pandoc}.
+Instead you should use the \textbf{figure} environment as in figure \ref{chick}.
+
+\begin{figure}
+
+\includegraphics{chick.jpg}
+\caption{This is a chick.}
+\label{chick}
+\end{figure}
+
+\begin{verbatim}
+\begin{figure}
+\includegraphics{chick.jpg}
+\caption{This is a chick.}
+\end{figure}
+\end{verbatim}
+
+\hypertarget{use-of-colour}{%
+\section{Use of colour}\label{use-of-colour}}
+
+General guidelines about the use of colour in images apply and should
+guide the creation of images in \LaTeX~.
+
+\hypertarget{using-pandoc}{%
+\section{\texorpdfstring{Using
+\textbf{pandoc}}{Using pandoc}}\label{using-pandoc}}
+
+If you follow the advice above then a PDF document generated in the
+usual way will be reasonably accessible with one important exception:
+mathematical content. Unfortunately screen reader software will not cope
+well with the mathematical content produced by the usual methods (ie
+running latex or pdflatex commands.)
+
+The best solution I have found is a two step procedure. Generate a
+\textbf{tex} source file and use \textbf{pando} to convert it to html.
+\textbf{Pandoc} allows an option to convert \LaTeX~ maths code to be
+converted to MathML which is read very well by modern screen reader
+software. This means that a document may need to be distributed in two
+file formats, but the burden is relatively low since both are generated
+from the same source.
+
+You can download \textbf{pandoc} from
+\href{https://pandoc.org/installing.html}{the pandoc installation page}.
+It is available for Windows, MacOS, linux and Chrome OS.
+
+\hypertarget{creating-the-web-page}{%
+\subsection{Creating the web page}\label{creating-the-web-page}}
+
+Once you have a tex source file you can generate the html equivalent by
+typing the following code on the command line interface (terminal, cmd):
+
+pandoc maths.tex -s --mathml -o maths.html
+
+assuming that your source file is called \textbf{maths.tex}.
+
+\subsection{Shortcomings of Pandoc conversion}
+
+Note that some things won't survive the conversion to HTML.  If you use
+\emph{pdftooltip} to create alt-text for images, neither the image nor the tool-tip will appear in the 
+HTML page.  For this reason, if you are going to create an HTML version of a document for accessibility, you 
+should use the package \emph{graphicx} (as most \LaTeX~ users usually do) and provid captions.  Overall, 
+I recommend the use of captions over tool-tip style alt-tex for this reason.
+
+\hypertarget{conclusion}{%
+\section{Conclusion}\label{conclusion}}
+
+Giving up \LaTeX~ would be burdensome for many writers. Nothing else I
+have so far provides for such simple and sophisticated typesetting not
+only of general mathematics, but in my experience of logic and of the
+notations used in linguistics. I suspect that the same is true of
+typesetting other STEM subjects such as chemistry and the engineering
+disciplines in general.
+
+I am still testing documents produced according to the principles in
+this document. So far the results are good but it is always possible
+that I am missing some points or that people can offer improvements. I
+welcome any comments by email to
+\href{my\%20ucl\%20email\%20address}{j.tyson@ucl.ac.uk}.
+
+\hypertarget{to-do}{%
+\section{To Do}\label{to-do}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  References for pdfcomment.
+\end{enumerate}
+\hypertarget{references}{%
+\section*{References}\label{references}}
+\addcontentsline{toc}{section}{References}
+
+\hypertarget{refs}{}
+\leavevmode\hypertarget{ref-defineemph}{}%
+\emph{Formatting - What Is the Canonical Way to Redefine the
+\textbackslash{}Textbackslashemph Command}. n.d. Accessed June 24, 2019.
+\url{https://tex.stackexchange.com/questions/6754/what-is-the-canonical-way-to-redefine-the-emph-command}.
+
+\leavevmode\hypertarget{ref-pandoc}{}%
+``Pandoc - About Pandoc.'' n.d. Accessed June 26, 2019.
+\url{https://pandoc.org/}.
+
+
+\end{document}

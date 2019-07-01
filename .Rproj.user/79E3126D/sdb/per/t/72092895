@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\n@book{defineemph,\n\ttitle = {formatting - {What} is the canonical way to redefine the {\\textbackslash}textbackslashemph command},\n\turl = {https://tex.stackexchange.com/questions/6754/what-is-the-canonical-way-to-redefine-the-emph-command},\n\turldate = {2019-06-24},\n\tannote = {00000}\n}\n\n@misc{pandoc,\n\ttitle = {Pandoc - {About} pandoc},\n\turl = {https://pandoc.org/},\n\turldate = {2019-06-26},\n\tfile = {Pandoc - About pandoc:N\\:\\\\Documents\\\\Zotero\\\\storage\\\\2JZNIFUB\\\\pandoc.org.html:text/html}\n}",
+    "created" : 1561544109060.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3616122092",
+    "id" : "72092895",
+    "lastKnownWriteTime" : 1561544294,
+    "last_content_update" : 1561544294401,
+    "path" : "~/AccessibilityWithLaTeX/accessible.bib",
+    "project_path" : "accessible.bib",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "text"
+}
