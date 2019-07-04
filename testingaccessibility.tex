@@ -1,8 +1,9 @@
 \documentclass[]{article}
 
-\usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{pdfcomment}
+\usepackage[svgnames]{xcolor}
+\usepackage{setspace}
 \usepackage{hyperref}
 
   \title{Creating Accessible Documents with LaTeX}
@@ -19,8 +20,10 @@
 
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-
+\pagecolor{Ivory}
 \begin{document}
+\onehalfspacing
+
 \maketitle
 
 {
@@ -106,6 +109,13 @@ of contents is included to increase accessibility.
 
 \hypertarget{formatting}{%
 \subsection{Formatting}\label{formatting}}
+
+\hypertarget{linespacing}{%
+\subsubsection{Line Spacing}\label{linespacing}}
+
+Set line spacing for your documents to one and a half lines using the package \emph{setspace}.  This makes available the command
+\emph{\textbackslash onehalfspace}.  All text following this will be set with 1.5 line spacing (unless another
+of the line spacing commands is issued to switch to another setting.
 
 \hypertarget{fonts-and-typefaces}{%
 \subsubsection{Fonts and typefaces}\label{fonts-and-typefaces}}
@@ -228,6 +238,21 @@ Instead you should use the \textbf{figure} environment as in figure \ref{chick}.
 General guidelines about the use of colour in images apply and should
 guide the creation of images in \LaTeX~.
 
+For some users a background colour other than white is helpful.  You can set the page background colour using the package
+\emph{xcolor}.  This package makes a variety of colour control commands and of colours available.  Some colours are in the 'base' \emph{xcolor} package, others are made available by \emph{options} when the package is loaded.  Here is an example of loading the package with the \emph{svgnames} options:
+
+\begin{verbatim}
+\usepackage[svgnames]{xcolor}
+\end{verbatim}
+
+This command
+
+\begin{verbatim}
+\pagecolor{Ivory}
+\end{verbatim}
+
+in the preamble will set the page background colour to \emph{Ivory} form the colours made available by the \emph{svgnames}option.
+
 \hypertarget{using-pandoc}{%
 \section{\texorpdfstring{Using
 \textbf{pandoc}}{Using pandoc}}\label{using-pandoc}}
@@ -256,7 +281,7 @@ It is available for Windows, MacOS, linux and Chrome OS.
 Once you have a tex source file you can generate the html equivalent by
 typing the following code on the command line interface (terminal, cmd):
 
-pandoc maths.tex -s --mathml -o maths.html
+pandoc maths.tex --toc -s --mathml -o maths.html
 
 assuming that your source file is called \textbf{maths.tex}.
 
@@ -291,6 +316,8 @@ welcome any comments by email to
 \def\labelenumi{\arabic{enumi}.}
 \item
   References for pdfcomment.
+\item
+  References for setspace.
 \end{enumerate}
 \hypertarget{references}{%
 \section*{References}\label{references}}
