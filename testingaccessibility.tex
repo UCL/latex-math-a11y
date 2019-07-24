@@ -115,6 +115,19 @@ Set line spacing for your documents to one and a half lines using the package \e
 \emph{\textbackslash onehalfspace}.  All text following this will be set with 1.5 line spacing (unless another
 of the line spacing commands is issued to switch to another setting).
 
+\hypertarget{margins}{%
+\subsubsection{Margins}\label{margins}}
+
+When creating a PDF, most \LaTeX{} document classes will produce generously wide margins.
+
+If you need to alter the margins - shorter text lines are usually easier for people to scan - you should use the \emph{geometry} package.  This package has a number of parameters dealing with page layout.  For margins, you have the option of setting a uniform margin with a command like
+
+\begin{verbatim}
+  \geometry{margins = 2in}
+\end{verbatim}
+
+or of setting \emph{top, left, right, bottom} margin parameters individually.
+
 \hypertarget{fonts-and-typefaces}{%
 \subsubsection{Fonts and typefaces}\label{fonts-and-typefaces}}
 
