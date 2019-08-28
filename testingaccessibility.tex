@@ -5,6 +5,7 @@
 \usepackage[svgnames]{xcolor}
 \usepackage{setspace}
 \usepackage{hyperref}
+\usepackage{natbib}
 
   \title{Creating Accessible Documents with LaTeX}
   \author{Jim Tyson}
@@ -21,7 +22,9 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \pagecolor{Ivory}
+
 \begin{document}
+
 \onehalfspacing
 
 \maketitle
@@ -85,8 +88,7 @@ generated in educational contexts. However, there is currently (to my
 knowledge) no way to generate a fully tagged PDF document that includes
 readable mathematics from \LaTeX~ source. The most accessible format
 that can be readily generated from the \LaTeX~ source is HTML.  To create this HTML, 
-writers can use the utility \textbf{pandoc} (``Pandoc - About
-Pandoc'' n.d.) which ensures that the mathematical content is
+writers can use the utility \textbf{pandoc} \citep{pandoc} which ensures that the mathematical content is
 transformed to MathML to be read by screen reader software. 
 
 Mathematics is typeset in the usual way. For example:
@@ -111,7 +113,7 @@ of contents is included to increase accessibility.
 \hypertarget{linespacing}{%
 \subsubsection{Line Spacing}\label{linespacing}}
 
-Set line spacing for your documents to one and a half lines using the package \emph{setspace}.  This makes available the command
+Set line spacing for your documents to one and a half lines using the package \emph{setspace} \citep{setspace}.  This makes available the command
 \emph{\textbackslash onehalfspace}.  All text following this will be set with 1.5 line spacing (unless another
 of the line spacing commands is issued to switch to another setting).
 
@@ -120,7 +122,7 @@ of the line spacing commands is issued to switch to another setting).
 
 When creating a PDF, most \LaTeX{} document classes will produce generously wide margins.
 
-If you need to alter the margins - shorter text lines are usually easier for people to scan - you should use the \emph{geometry} package.  This package has a number of parameters dealing with page layout.  For margins, you have the option of setting a uniform margin with a command like
+If you need to alter the margins - shorter text lines are usually easier for people to scan - you should use the \emph{geometry} package \cite{geometry}.  This package has a number of parameters dealing with page layout.  For margins, you have the option of setting a uniform margin with a command like
 
 \begin{verbatim}
   \geometry{margins = 2in}
@@ -155,8 +157,7 @@ below isnerted in the document preamble will do it:
 \makeatother
 \end{verbatim}
 
-(\emph{Formatting - What Is the Canonical Way to Redefine the
-\textbackslash{}Textbackslashemph Command} n.d.)
+\citep{defineemph}
 
 \hypertarget{links}{%
 \subsubsection{Links}\label{links}}
@@ -211,7 +212,7 @@ better for the caption to \textbf{precede} the graphical element rather
 than follow it?
 
 To create something more like true \textbf{alt-text}, you can use the
-package \textbf{pdfcomment}. With this package you can create a tool-tip
+package \textbf{pdfcomment} \citep{pdfcomment}. With this package you can create a tool-tip
 for an element as follows:
 
 \begin{verbatim}
@@ -308,7 +309,7 @@ I recommend the use of captions over tool-tip style alt-tex for this reason.
 \section{Conclusion}\label{conclusion}}
 
 Giving up \LaTeX~ would be burdensome for many writers. Nothing else I
-have so far provides for such simple and sophisticated typesetting not
+have seen so far provides for such simple and sophisticated typesetting not
 only of general mathematics, but in my experience of logic and of the
 notations used in linguistics. I suspect that the same is true of
 typesetting other STEM subjects such as chemistry and the engineering
@@ -326,13 +327,17 @@ welcome any comments by email to
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  References for pdfcomment.
+  Produce guide to general \LaTeX{} tutorials.
 \item
-  References for setspace.
+  Reference for hyperref
+\item
+  Reference for xcolor
 \end{enumerate}
+\iffalse
 \hypertarget{references}{%
 \section*{References}\label{references}}
 \addcontentsline{toc}{section}{References}
+
 
 \hypertarget{refs}{}
 \leavevmode\hypertarget{ref-defineemph}{}%
@@ -343,6 +348,10 @@ welcome any comments by email to
 \leavevmode\hypertarget{ref-pandoc}{}%
 ``Pandoc - About Pandoc.'' n.d. Accessed June 26, 2019.
 \url{https://pandoc.org/}.
+\fi
+
+\bibliographystyle{dinat}
+\bibliography{accessible}
 
 
 \end{document}
