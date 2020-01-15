@@ -7,9 +7,9 @@
 \usepackage{hyperref}
 \usepackage{natbib}
 
-  \title{Creating Accessible Documents with LaTeX}
+  \title{LaTeX for absolute beginers teaching STEM subjects}
   \author{Jim Tyson}
-  \date{19 June 2019}
+  \date{\today}
 
 \renewcommand{\familydefault}{\sfdefault}
 
@@ -28,330 +28,33 @@
 \onehalfspacing
 
 \maketitle
-
-{
-\setcounter{tocdepth}{2}
 \tableofcontents
-}
-\hypertarget{to-non-users}{%
-\section{\texorpdfstring{To non
-\LaTeX~users}{To non ~users}}\label{to-non-users}}
 
-This document is intended for readers who \emph{already} use \LaTeX. A
-number of very good guides already exist for learning \LaTeX.
+\section{What is \LaTeX{}?}
 
-\hypertarget{introduction-what-is-and-isnt-accessible}{%
-\section{Introduction: what is and isn't
-accessible}\label{introduction-what-is-and-isnt-accessible}}
+\subsection{Markup and WIMPs}
 
-What makes a document accessible is not a matter of what software
-technology is used to produce it. An accessible document however
-produced should meet the standards set out in
-\href{https://www.ucl.ac.uk/isd/services/websites-apps/creating-accessible-content/accessibility-fundamentals}{UCL's
-basic guidance on accessibility pages}.
+There are various ways of creating documents for reading in print, on screen or to be read.  People are often familiar with the more modern \emph{What You See Is What You Get} approach that is implemented in a word processor application like Microsoft Word.  In this approach, the user edits an on-screen approximation of what the final document will look like, updated in real time as they edit it.  Typically, the document is formatted using a \emph{Windows, Icons, Mouse and Pointer} interface, often using the \emph{Object-Verb} action scheme: select and highlight some text and then modify it.  This method is attractive to users and it is usually held to require little learning.  The truth is that using these applications effectively \emph{does} require learning, but using them effectively is uncommon.
 
-The basics as set out there cover
+The major alternative to this \emph{WIMP} method is the \emph{markup} approach.  In this scheme, a document is prepared with all content in plain text - just the characters you could enter using Windows notepad, for example - and the content is interspersed with coded instructions concerning formatting, structure and layout.  Examples of the markup approach include \emph{SGML, HTML \TeX{}} and \emph{\LaTeX{}} and more recent markup 'lite' approaches, such as \emph{markdown}.  These systems are commonly held to be difficult to learn and adapt to, although enthusiasts insist that the learning curve is relatively shallow and that the systems encourage good document preparation practices.
 
-\begin{itemize}
-\tightlist
-\item
-  structure;
-\item
-  formatting;
-\item
-  links;
-\item
-  labeling images;
-\item
-  use of colour;
-\item
-  content;%
-\item
-  transcripts and captions.
-\end{itemize}
+\subsection{The case for markup}
 
-Issues regarding video material (\textbf{transcripts and captions}) are
-not of particular relevance to \LaTeX~ users but I will address the
-other matters below.
+Even after committing ourselves to produce accessible and inclusive materials using common applications, there remain some domains where these applications do not provide adequate solutions.  Perhaps the most common is where there is a requirement to typeset anything but the simplest mathematics.  While Microsoft Word, for example, has a good equation editor, the program cannot easily produce PDFs with machine readable (text to speech) mathematical content and the typesetting is less than good.  Moreover, many creators in the STEM domains will already be familiar with - and often be enthusiastic users of - LaTeX for document preparation.
 
-\hypertarget{guidance-for-latex-users}{%
-\section{Guidance for LaTeX users}\label{guidance-for-latex-users}}
+\subsection{\LaTeX{} for the uninitiated}
 
-For screen-reader users, the least good solution is to provide the source
-\LaTeX~ file. This is not generally acceptable. The burden of
-understanding content from the raw \LaTeX~ is unacceptably high.
+\LaTeX{} is a markup system devised by Leslie Lamport.  It is in fact a set of macros (simplifying commands) for the \TeX{} typesetting system devised by Donald Knuth, a mathematician and computer scientist who typeset his own noteworthy books on computation and mathematics.
 
-Instead, the source should be prepared in such a way as to produce a
-document that is acceptably read by a screen reader. In some respects
-the ideal would be a tagged PDF - since PDF is the usual output
-generated in educational contexts. However, there is currently (to my
-knowledge) no way to generate a fully tagged PDF document that includes
-readable mathematics from \LaTeX~ source. The most accessible format
-that can be readily generated from the \LaTeX~ source is HTML.  To create this HTML, 
-writers can use the utility \textbf{pandoc} \citep{pandoc} which ensures that the mathematical content is
-transformed to MathML to be read by screen reader software. 
+A \LaTeX{} file is prepared as a file of plain text and commands.  This file is passed through the \emph{\LaTeX{} engine} and in principle a variety of output formats can be produced, but most commonly the output is a PDF.
 
-Mathematics is typeset in the usual way. For example:
+\LaTeX{} can be used with a dedicated desktop editor and processor such as MiKTeX, TeXMaker, many of which run on Windows, Mac and Linux desktops.  Alternatively, there are online document production systems such as Overleav which provide an online edtor and processor to produce documents in the cloud.
 
-\[\frac{\sum{(x-\bar{x})^2}}{N}\]
+Which ever system you use the core language and techniques are identical.
 
-I will describe using \textbf{pandoc} later in this document after I
-have outlined steps to be taken in preparing the \LaTeX~ source.
+\subsubsection{Document classes and libraries}
 
-\hypertarget{structure}{%
-\subsection{Structure}\label{structure}}
 
-Most LaTeX writers will use the \textbf{\textbackslash{}section\{\}}
-family of commands to create a structured document. These heading styles
-will be understood when a PDF is rendered and will create a navigable
-document for a screen reader user. It is also recommended that a table
-of contents is included to increase accessibility.
-
-\hypertarget{formatting}{%
-\subsection{Formatting}\label{formatting}}
-
-\hypertarget{linespacing}{%
-\subsubsection{Line Spacing}\label{linespacing}}
-
-Set line spacing for your documents to one and a half lines using the package \emph{setspace} \citep{setspace}.  This makes available the command
-\emph{\textbackslash onehalfspace}.  All text following this will be set with 1.5 line spacing (unless another
-of the line spacing commands is issued to switch to another setting).
-
-\hypertarget{margins}{%
-\subsubsection{Margins}\label{margins}}
-
-When creating a PDF, most \LaTeX{} document classes will produce generously wide margins.
-
-If you need to alter the margins - shorter text lines are usually easier for people to scan - you should use the \emph{geometry} package \cite{geometry}.  This package has a number of parameters dealing with page layout.  For margins, you have the option of setting a uniform margin with a command like
-
-\begin{verbatim}
-  \geometry{margins = 2in}
-\end{verbatim}
-
-or of setting \emph{top, left, right, bottom} margin parameters individually.
-
-\hypertarget{fonts-and-typefaces}{%
-\subsubsection{Fonts and typefaces}\label{fonts-and-typefaces}}
-
-Where possible, change the font family for the document with the
-following command in the preamble:
-
-\begin{verbatim}
-  \renewcommand{\familydefault}{\sfdefault}
-\end{verbatim}
-
-This will set a sans serif \textbf{Computer Modern} as the default for
-the document. Use \texttt{\textbackslash{}textbf\{\}} for emphasis
-rather than \texttt{\textbackslash{}emph\{\}} which produces italic text
-by default. If you are confident, you may consider redefining
-\texttt{\textbackslash{}emph\{\}} to produce \textbf{bold text}. This is
-not difficult but to preserve the toggling behaviour of
-\texttt{\textbackslash{}emph\{\}} requires some LaTeX know how. The code
-below isnerted in the document preamble will do it:
-
-\begin{verbatim}
-\makeatletter
-\DeclareRobustCommand{\em}{%
-  \@nomath\em \if b\expandafter\@car\f@series\@nil
-  \normalfont \else \bfseries \fi}
-\makeatother
-\end{verbatim}
-
-\citep{defineemph}
-
-\hypertarget{links}{%
-\subsubsection{Links}\label{links}}
-
-\hypertarget{hyperlinks-to-web-pages}{%
-\paragraph{Hyperlinks to web pages}\label{hyperlinks-to-web-pages}}
-
-Use the command \texttt{\textbackslash{}href\{url\}\{linktext\}} rather
-than use bare urls for inserting hyperlinks. So
-
-\begin{verbatim}
-\href{http://www.ucl.ac.uk/isd}{ISD home page.}
-\end{verbatim}
-
-Which produces \href{http://www.ucl.ac.uk/isd}{ISD home page.}
-
-\hypertarget{internal-links-and-cross-references}{%
-\paragraph{Internal links and cross
-references}\label{internal-links-and-cross-references}}
-
-It will be additionally helpful to make all \textbf{cross references} in
-your document into internal hyperlinks. You can do this simply by import
-the package \textbf{hyperref} in the preamble of your document with the
-\texttt{\textbackslash{}usepackage} command. Usually, \textbf{hyperref}
-must be the \textbf{last} package imported. The \textbf{table of
-contents}, \textbf{cross references} to graphics and tables, and
-citations, will all become document internal links. You can control the
-colours used for links as follows:
-
-\begin{verbatim}
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,
-    urlcolor=cyan,
-}
-\end{verbatim}
-
-You can use the general \LaTeX~ \texttt{\textbackslash{}tableofcontents}
-command to generate a table of contents which will now be clickable and
-will be usable for navigation by screen reader users.
-
-\hypertarget{labelling-images-alt-text}{%
-\subsection{Labelling images (Alt
-text)}\label{labelling-images-alt-text}}
-
-If all images (and tables, and graphs and charts) have captions, a
-document created from your \LaTeX~ document will be reasonably
-accessible. You might consider the placing of your captions: would it be
-better for the caption to \textbf{precede} the graphical element rather
-than follow it?
-
-To create something more like true \textbf{alt-text}, you can use the
-package \textbf{pdfcomment} \citep{pdfcomment}. With this package you can create a tool-tip
-for an element as follows:
-
-\begin{verbatim}
-\pdftooltip{\includegraphics{img.png}}{This is the ALT text}
-\end{verbatim}
-
-Here is an example:
-
-\pdftooltip{\includegraphics{chick.jpg}}{This is a chick.}
-
-Note that you cannot use this method with the \textbf{figure} environment, and so
-images cannot have both a \emph{pdftooltip} and a \emph{caption}.
-
-This works reliably with Adobe Reader, but some pdf readers may produce
-a less good result.  You cannot use this method when producing HTML with \emph{pandoc}.
-Instead you should use the \textbf{figure} environment as in figure \ref{chick}.
-
-\begin{figure}
-
-\includegraphics{chick.jpg}
-\caption{This is a chick.}
-\label{chick}
-\end{figure}
-
-\begin{verbatim}
-\begin{figure}
-\includegraphics{chick.jpg}
-\caption{This is a chick.}
-\end{figure}
-\end{verbatim}
-
-\hypertarget{use-of-colour}{%
-\section{Use of colour}\label{use-of-colour}}
-
-General guidelines about the use of colour in images apply and should
-guide the creation of images in \LaTeX~.
-
-For some users a background colour other than white is helpful.  You can set the page background colour using the package
-\emph{xcolor}.  This package makes a variety of colour control commands and of colours available.  Some colours are in the `base' \emph{xcolor} package, others are made available by \emph{options} when the package is loaded.  Here is an example of loading the package with the \emph{svgnames} options:
-
-\begin{verbatim}
-\usepackage[svgnames]{xcolor}
-\end{verbatim}
-
-This command
-
-\begin{verbatim}
-\pagecolor{Ivory}
-\end{verbatim}
-
-in the preamble will set the page background colour to \emph{Ivory} form the colours made available by the \emph{svgnames} option.
-
-\hypertarget{using-pandoc}{%
-\section{\texorpdfstring{Using
-\textbf{pandoc}}{Using pandoc}}\label{using-pandoc}}
-
-If you follow the advice above then a PDF document generated in the
-usual way will be reasonably accessible with one important exception:
-mathematical content. Unfortunately screen reader software will not cope
-well with the mathematical content produced by the usual methods (ie
-running latex or pdflatex commands.)
-
-The best solution I have found is a two step procedure. Generate a
-\textbf{tex} source file and use \textbf{pandoc} to convert it to html.
-\textbf{Pandoc} allows an option to convert \LaTeX~ maths code to be
-converted to MathML which is read very well by modern screen reader
-software. This means that a document may need to be distributed in two
-file formats, but the burden is relatively low since both are generated
-from the same source.
-
-You can download \textbf{pandoc} from
-\href{https://pandoc.org/installing.html}{the pandoc installation page}.
-It is available for Windows, MacOS, linux and Chrome OS.
-
-\hypertarget{creating-the-web-page}{%
-\subsection{Creating the web page}\label{creating-the-web-page}}
-
-Once you have a tex source file you can generate the html equivalent by
-typing the following code on the command line interface (terminal, cmd):
-
-pandoc maths.tex --toc -s --mathml -o maths.html
-
-assuming that your source file is called \textbf{maths.tex}.
-
-\subsection{Shortcomings of Pandoc conversion}
-
-Note that some things won't survive the conversion to HTML.  If you use
-\emph{pdftooltip} to create alt-text for images, neither the image nor the tool-tip will appear in the 
-HTML page.  For this reason, if you are going to create an HTML version of a document for accessibility, you 
-should use the package \emph{graphicx} (as most \LaTeX~ users usually do) and provid captions.  Overall, 
-I recommend the use of captions over tool-tip style alt-tex for this reason.
-
-\hypertarget{conclusion}{%
-\section{Conclusion}\label{conclusion}}
-
-Giving up \LaTeX~ would be burdensome for many writers. Nothing else I
-have seen so far provides for such simple and sophisticated typesetting not
-only of general mathematics, but in my experience of logic and of the
-notations used in linguistics. I suspect that the same is true of
-typesetting other STEM subjects such as chemistry and the engineering
-disciplines in general.
-
-I am still testing documents produced according to the principles in
-this document. So far the results are good but it is always possible
-that I am missing some points or that people can offer improvements. I
-welcome any comments by email to
-\href{my\%20ucl\%20email\%20address}{j.tyson@ucl.ac.uk}.
-
-\hypertarget{to-do}{%
-\section{To Do}\label{to-do}}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Produce guide to general \LaTeX{} tutorials.
-\item
-  Reference for hyperref
-\item
-  Reference for xcolor
-\end{enumerate}
-\iffalse
-\hypertarget{references}{%
-\section*{References}\label{references}}
-\addcontentsline{toc}{section}{References}
-
-
-\hypertarget{refs}{}
-\leavevmode\hypertarget{ref-defineemph}{}%
-\emph{Formatting - What Is the Canonical Way to Redefine the
-\textbackslash{}Textbackslashemph Command}. n.d. Accessed June 24, 2019.
-\url{https://tex.stackexchange.com/questions/6754/what-is-the-canonical-way-to-redefine-the-emph-command}.
-
-\leavevmode\hypertarget{ref-pandoc}{}%
-``Pandoc - About Pandoc.'' n.d. Accessed June 26, 2019.
-\url{https://pandoc.org/}.
-\fi
-
-\bibliographystyle{dinat}
-\bibliography{accessible}
 
 
 \end{document}
